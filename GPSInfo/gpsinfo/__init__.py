@@ -5,7 +5,7 @@
 Shows GPS metadata in JPEG files
 
 .. currentmodule:: gpsinfo
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 """
 
 from .version import __version__, __release__  # noqa

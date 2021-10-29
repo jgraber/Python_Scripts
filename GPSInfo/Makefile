@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build
 .PHONY: build publish package coverage test lint docs venv
 PROJ_SLUG = gpsinfo
-CLI_NAME = gpsinfo
+CLI_NAME = gps-info
 PY_VERSION = 3.8
 LINTER = flake8
 

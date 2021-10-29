@@ -3,7 +3,7 @@
 
 """
 .. currentmodule:: test_example
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 
 This is a sample test module.
 """

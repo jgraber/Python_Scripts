@@ -3,7 +3,7 @@
 
 """
 .. currentmodule:: test_cli
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 
 This is the test module for the project's command-line interface (CLI)
 module.
@@ -51,6 +51,6 @@ def test_hello_displays_expected_message():
     runner: CliRunner = CliRunner()
     result: Result = runner.invoke(cli.cli, ["hello"])
     # fmt: off
-    assert 'gpsinfo' in result.output.strip(), \
+    assert 'gps-info' in result.output.strip(), \
         "'Hello' messages should contain the CLI name."
     # fmt: on

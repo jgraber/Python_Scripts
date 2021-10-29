@@ -5,7 +5,7 @@
 This file is used to create the package we'll publish to PyPI.
 
 .. currentmodule:: setup.py
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 """
 
 import importlib.util
@@ -49,12 +49,12 @@ setup(
     ],
     entry_points="""
     [console_scripts]
-    gpsinfo=gpsinfo.cli:cli
+    gps-info=gpsinfo.cli:cli
     """,
     python_requires=">=0.0.1",
     license='MIT',  # noqa
     author='Johnny Graber',
-    author_email='jg@jgraber.ch',
+    author_email='JG@JGraber.ch',
     # Use the URL to the github repo.
     url= 'https://github.com/jgraber/gpsinfo',
     download_url=(

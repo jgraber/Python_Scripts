@@ -16,7 +16,7 @@ It can be used as a handy facility for running the task from a command line.
     `Read-The-Docs <http://luigi.readthedocs.io/en/stable/>`_ page.
 
 .. currentmodule:: gpsinfo.cli
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 """
 import logging
 import click
@@ -50,7 +50,7 @@ pass_info = click.make_pass_decorator(Info, ensure=True)
 @click.option("--verbose", "-v", count=True, help="Enable verbose output.")
 @pass_info
 def cli(info: Info, verbose: int):
-    """Run gpsinfo."""
+    """Run gps-info."""
     # Use the verbosity count to determine the logging level...
     if verbose > 0:
         logging.basicConfig(
@@ -72,7 +72,7 @@ def cli(info: Info, verbose: int):
 @pass_info
 def hello(_: Info):
     """Say 'hello' to the nice people."""
-    click.echo("gpsinfo says 'hello'")
+    click.echo("gps-info says 'hello'")
 
 
 @cli.command()

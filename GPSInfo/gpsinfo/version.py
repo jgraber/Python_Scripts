@@ -5,7 +5,7 @@
 This module contains project version information.
 
 .. currentmodule:: gpsinfo.version
-.. moduleauthor:: Johnny Graber <jg@jgraber.ch>
+.. moduleauthor:: Johnny Graber <JG@JGraber.ch>
 """
 
 __version__ = "0.0.1"  #: the working version
