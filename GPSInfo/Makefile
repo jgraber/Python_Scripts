@@ -2,7 +2,7 @@
 .PHONY: build publish package coverage test lint docs venv
 PROJ_SLUG = gpsinfo
 CLI_NAME = gps-info
-PY_VERSION = 3.8
+PY_VERSION = 3.10
 LINTER = flake8
 
 
