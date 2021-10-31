@@ -30,28 +30,3 @@ def test_import_getVersions_originalVersions():
         "This test is expected to fail when the version increments. "
         "It is here only as an example and you can remove it."
     )
-
-    """
-    This is just an example test suite that demonstrates the very useful
-    `parameterized` module.  It contains a test in which the squares of the
-    first two parameters are added together and passes if that sum equals the
-    third parameter.
-    """
-
-
-@pytest.mark.parametrize("a,b,c", [(1, 2, 5), (3, 4, 25)])
-def test_ab_addSquares_equalsC(a, b, c):
-    """
-    Arrange: Acquire the first two parameters (a and b).
-    Act: Add the squares of the first two parameters (a and b).
-    Assert: The sum of the squares equals the third parameter (c).
-
-    :param a: the first parameter
-    :param b: the second parameter
-    :param c: the result of adding the squares of a and b
-    """
-    assert (
-        a * a + b * b == c,
-        "'c' should be the sum of the squares of 'a' and 'b'. "
-        "This is an example test and can be removed.",
-    )
