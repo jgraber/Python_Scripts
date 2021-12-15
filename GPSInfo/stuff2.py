@@ -3,7 +3,6 @@
 
 import click
 
-
 @click.group()
 @click.version_option(version='1.0.0')
 def greet():
