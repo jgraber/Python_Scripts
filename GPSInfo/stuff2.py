@@ -10,13 +10,15 @@ def greet():
 
 
 @greet.command()
+@click.argument('name')  # add the name argument
 def hello(**kwargs):
-    pass
+    print('Hello, {0}!'.format(kwargs['name']))
 
 
 @greet.command()
+@click.argument('name')
 def goodbye(**kwargs):
-    pass
+    print('Goodbye, {0}!'.format(kwargs['name']))
 
 if __name__ == '__main__':
     greet()
