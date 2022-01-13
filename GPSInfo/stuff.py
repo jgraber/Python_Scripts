@@ -7,7 +7,7 @@ def hello(files):
     for filename in files:
         click.echo(filename)
 
-@click.version_option()
+@click.version_option(version='2.0.0', prog_name='abc')
 @click.group()
 def cli():
     pass
