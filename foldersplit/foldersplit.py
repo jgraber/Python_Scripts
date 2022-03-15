@@ -8,9 +8,11 @@ def hello(count, name):
         click.echo(f"Hello {name}!")
 
 @click.command()
+@click.option('--split-by',
+              type=click.Choice(['day', 'month'], case_sensitive=False))
 @click.argument('folder', type=click.Path(exists=True))
-def split(folder):
-    print(f"work with folder: {folder}")
+def split(folder,split_by):
+    print(f"work with folder: {folder} - split by {split_by}")
 
 if __name__ == '__main__':
     split()
