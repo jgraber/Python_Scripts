@@ -12,6 +12,7 @@ def hello(count, name):
               type=click.Choice(['day', 'month'], case_sensitive=False),
               default='day')
 @click.argument('folder', type=click.Path(exists=True))
+@click.version_option(version='1.0.0')
 def split(folder,split_by):
     print(f"work with folder: {folder} - split by {split_by}")
 
