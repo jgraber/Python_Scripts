@@ -14,7 +14,7 @@ def hello(count, name):
 @click.argument('folder', type=click.Path(exists=True))
 @click.version_option(version='1.0.0')
 def split(folder,split_by):
-    print(f"work with folder: {folder} - split by {split_by}")
+    click.echo(f"work with folder: {folder} - split by {split_by}")
 
 if __name__ == '__main__':
     split()
