@@ -15,6 +15,7 @@ def hello(count, name):
 @click.argument('folder', type=click.Path(exists=True))
 @click.version_option(version='1.0.0')
 def split(folder,split_by):
+    """Splits the files inside a folder into subfolders (by date or month)"""
     click.echo(f"work with folder: {folder} - split by {split_by}")
 
 if __name__ == '__main__':
