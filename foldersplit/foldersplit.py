@@ -1,5 +1,9 @@
 import click
 
+def split_folder(folder, split_by):
+    click.echo(f"work with folder: {folder} - split by {split_by}")
+
+
 @click.command()
 @click.option('--split-by',
               type=click.Choice(['day', 'month'], 
@@ -7,9 +11,9 @@ import click
               default='day')
 @click.argument('folder', type=click.Path(exists=True))
 @click.version_option(version='1.0.0')
-def split(folder,split_by):
+def split(folder, split_by):
     """Splits the files inside a folder into subfolders (by date or month)"""
-    click.echo(f"work with folder: {folder} - split by {split_by}")
+    split_folder(folder, split_by)
 
 if __name__ == '__main__':
     split()
