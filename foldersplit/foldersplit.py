@@ -3,6 +3,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
+import progressbar
 
 def split_folder(folder, split_by):
     click.echo(f"work with folder: {folder} - split by {split_by}")
@@ -17,7 +18,7 @@ def split_folder(folder, split_by):
                 path = Path(folder, subfolder, entry.name)
                 move.append((entry.path, str(path)))
 
-    for old, new in move:
+    for old, new in progressbar.progressbar(move):
         dir_name, _ = os.path.split(new)
         if not os.path.exists(dir_name):
             os.mkdir(dir_name)
