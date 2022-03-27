@@ -26,16 +26,13 @@ def split_folder(folder, split_by):
         print(f"{old} -> {new}")
         shutil.move(old, new)
         
-    # files = os.listdir(folder)
-    # for file in files:
-    #     print(file)
-    #     # https://stackoverflow.com/questions/11348953/how-can-i-set-the-last-modified-time-of-a-file-from-python
 
 def _get_subfolder(create_date, split_by):
     if split_by == 'month':
         return "_" + create_date.strftime('%Y-%m')
 
     return "_" + create_date.strftime('%Y-%m-%d')
+
 
 @click.command()
 @click.option('--split-by',
@@ -47,6 +44,7 @@ def _get_subfolder(create_date, split_by):
 def split(folder, split_by):
     """Splits the files inside a folder into subfolders (by date or month)"""
     split_folder(folder, split_by)
+
 
 if __name__ == '__main__':
     split()
