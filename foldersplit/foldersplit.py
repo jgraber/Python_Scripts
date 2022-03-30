@@ -28,6 +28,7 @@ def split_folder(folder, split_by):
         
 
 def _get_subfolder(create_date, split_by):
+    """Creates a name for a subfolder depending on the date and how you want to split it."""
     if split_by == 'month':
         return "_" + create_date.strftime('%Y-%m')
 
