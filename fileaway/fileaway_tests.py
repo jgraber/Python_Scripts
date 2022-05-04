@@ -15,7 +15,8 @@ def format_numer(number):
 @pytest.mark.parametrize("input, expected",
                          [(['a/a.txt'], ['a_001.txt']),
                           (['a/a.txt', 'a/b.txt'], ['a_001.txt','a_002.txt']),
-                          (['a/a.txt', 'b/b.txt'], ['a_001.txt','b_001.txt'])
+                          (['a/a.txt', 'b/b.txt'], ['a_001.txt','b_001.txt']),
+                          (['a/a.txt', 'b/a.txt'], ['a_001.txt','b_001.txt'])
                          ])
 def test_file_names_are_correctly_translated(input, expected):
     assert expected == input
