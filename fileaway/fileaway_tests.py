@@ -16,7 +16,8 @@ def format_numer(number):
                          [(['a/a.txt'], ['a_001.txt']),
                           (['a/a.txt', 'a/b.txt'], ['a_001.txt','a_002.txt']),
                           (['a/a.txt', 'b/b.txt'], ['a_001.txt','b_001.txt']),
-                          (['a/a.txt', 'b/a.txt'], ['a_001.txt','b_001.txt'])
+                          (['a/a.txt', 'b/a.txt'], ['a_001.txt','b_001.txt']),
+                          (['a/b/c.txt'], ['a_b_001.txt']),
                          ])
 def test_file_names_are_correctly_translated(input, expected):
     assert expected == input
