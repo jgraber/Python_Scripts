@@ -20,5 +20,8 @@ def format_numer(number):
                           (['a/b/c.txt'], ['a_b_001.txt']),
                          ])
 def test_file_names_are_correctly_translated(input, expected):
+    for file in input:
+        print(file)
+    
     assert expected == input
     print(f"{input}: {expected}")
