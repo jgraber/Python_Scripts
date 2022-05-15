@@ -1,4 +1,5 @@
 import pytest
+import os
 
 def test_1_is_printed_as_001():
     index = 1
@@ -19,9 +20,17 @@ def format_numer(number):
                           (['a/a.txt', 'b/a.txt'], ['a_001.txt','b_001.txt']),
                           (['a/b/c.txt'], ['a_b_001.txt']),
                          ])
-def test_file_names_are_correctly_translated(input, expected):
+def test_file_names_are_correctly_translated(input, expected, monkeypatch: pytest.MonkeyPatch):
+    # monkeypatch.chdir(os.path.dirname(os.path.dirname(__file__)))
+    workingDir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
     for file in input:
-        print(file)
+        test_file_path = os.path.join(
+            os.path.relpath(
+                workingDir + 
+                '/correct_translated/'), 
+            file)
+        print(f"{file} -> {os.path.abspath(test_file_path)}")
     
-    assert expected == input
+    # assert expected == input
     print(f"{input}: {expected}")
