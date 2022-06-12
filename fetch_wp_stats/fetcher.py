@@ -56,8 +56,12 @@ def fetch_stats_for_day(folder, day, driver):
     print(f"work on {day}")
     # posts = f"https://wordpress.com/stats/day/posts/improveandrepeat.com?startDate={day}"
     # driver.get(posts)
-    countries = f"https://wordpress.com/stats/day/countryviews/improveandrepeat.com?startDate={day}"
-    driver.get(countries)
+    # countries = f"https://wordpress.com/stats/day/countryviews/improveandrepeat.com?startDate={day}"
+    # driver.get(countries)
+    # referer = f"https://wordpress.com/stats/day/searchterms/improveandrepeat.com?startDate={day}"
+    # driver.get(referer)
+    clicks = f"https://wordpress.com/stats/day/clicks/improveandrepeat.com?startDate={day}"
+    driver.get(clicks)
     time.sleep(2)
     # driver.execute_script("document.getElementByClassName('jetpack-colophon').scrollIntoView();")
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
