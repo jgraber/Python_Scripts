@@ -31,20 +31,20 @@ def prepare_browser():
     return driver
 
 def fetch_stats(folder, date_start, date_end):
-    date_start = min(date_start, datetime.today())
-    date_end = min(date_end, datetime.today())
+    date_start = min(date_start, date.today())
+    date_end = min(date_end, date.today())
 
     print(f"folder: {folder}")
-    print(f"start: {date_start.date()}")
-    print(f"end: {date_end.date()}")
+    print(f"start: {date_start}")
+    print(f"end: {date_end}")
 
     driver = prepare_browser()
 
     fetch_day = date_start
     while fetch_day < date_end:
-        print(f"fetch day: {fetch_day.date()}")
+        print(f"fetch day: {fetch_day}")
         # do work
-        fetch_stats_for_day(folder, fetch_day.date(), driver)
+        fetch_stats_for_day(folder, fetch_day, driver)
         fetch_day += timedelta(days=1)
 
     print("wait to finish downloads...")
@@ -80,7 +80,7 @@ def fetch_stats_for_day(folder, day, driver):
 @click.version_option(version='1.0.0')
 def fetch(folder, date_start, date_end):
     """Splits the files inside a folder into subfolders (by date or month)"""
-    fetch_stats(folder, date_start, date_end)
+    fetch_stats(folder, date_start.date(), date_end.date())
 
 
 if __name__ == '__main__':
