@@ -34,8 +34,7 @@ def ssl_expiry_datetime(hostname):
     return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat), issued_by
 
 if __name__ == "__main__":
-    # https://stackoverflow.com/a/70691177/532064
-    # pip install rich
+    # see https://improveandrepeat.com/2022/07/python-friday-132-rich-tables-for-your-terminal-apps/
     
     console = Console()
 
