@@ -14,7 +14,7 @@ def read_links():
         lines = f.readlines()
         return lines
     
-def prepare_targes(lines):
+def prepare_targets(lines):
     targets = {}
     for line in lines:
         parts = line.split("|")
@@ -75,7 +75,7 @@ def print_status(status, targets):
 
 if __name__ == '__main__':
     lines = read_links()
-    targets = prepare_targes(lines)
+    targets = prepare_targets(lines)
     print(f"#targets: {len(targets)}")
     # print_structure(targets)
     status = check_targets(targets)
