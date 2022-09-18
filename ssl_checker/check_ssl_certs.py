@@ -63,7 +63,7 @@ if __name__ == "__main__":
     table = Table(show_header=True, header_style="bold")
     table.add_column("Domain", style="dim")
     table.add_column("Expiry Date")
-    table.add_column("Expires in \[days]", justify="right")
+    table.add_column("Expires in (days)", justify="right")
     table.add_column("Issuer")
     
     for value in domains_url:
