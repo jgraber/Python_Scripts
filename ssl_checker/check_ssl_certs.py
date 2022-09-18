@@ -24,9 +24,7 @@ class CertificateInfo(NamedTuple):
         return self.expiry_date.strftime('%Y-%m-%d')
  
 
-def ssl_expiry_datetime(hostname):
-    ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
-
+def load_certificate(hostname):
     context = ssl.create_default_context()
     context.check_hostname = False
 
@@ -38,12 +36,17 @@ def ssl_expiry_datetime(hostname):
     
     conn.connect((hostname, 443))
     certificate = conn.getpeercert()
-    
+    return certificate
+
+
+def read_certificate(hostname, certificate):
+    ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
+    expire_date = datetime.strptime(certificate['notAfter'], ssl_dateformat)
+    remaining = expire_date - datetime.now()
+
     # https://stackoverflow.com/a/30863209/532064
     issuer = dict(x[0] for x in certificate['issuer'])
     issued_by = issuer['organizationName']
-    expire_date = datetime.strptime(certificate['notAfter'], ssl_dateformat)
-    remaining = expire_date - datetime.now()
 
     return CertificateInfo(hostname, expire_date, remaining.days, issued_by)
 
@@ -51,8 +54,13 @@ def ssl_expiry_datetime(hostname):
 # if __name__ == "__main__":
 #     for value in domains_url:
 #         try:
-#             cert_info = ssl_expiry_datetime(value)
-#             print(f"{cert_info.domain}, {cert_info.expires_on()}, {cert_info.expires_in}, {cert_info.issuer}")
+#             certificate = load_certificate(value)
+#             cert_info = read_certificate(value, certificate)
+#             print(f"{cert_info.domain}, "\
+#                 f"{cert_info.expires_on()}, "\
+#                 f"{cert_info.expires_in}, "\
+#                 f"{cert_info.issuer}"
+#             )
 #         except Exception as e:
 #             print(f"{value} {e.strerror}")
         
@@ -68,7 +76,9 @@ if __name__ == "__main__":
     
     for value in domains_url:
         try:
-            cert_info = ssl_expiry_datetime(value)
+            certificate = load_certificate(value)
+            cert_info = read_certificate(value, certificate)
+
             table.add_row(cert_info.domain, 
                           str(cert_info.expires_on()), 
                           str(cert_info.expires_in), 
