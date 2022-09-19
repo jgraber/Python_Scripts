@@ -2,12 +2,11 @@
 import socket
 import ssl
 from datetime import datetime
+from typing import NamedTuple
 from rich.console import Console
 from rich.table import Table
-from typing import NamedTuple
 
-
-domains_url = [
+domains = [
 "ImproveAndRepeat.com",
 "python.org",
 "python-err.org"
@@ -40,8 +39,9 @@ def load_certificate(hostname):
 
 
 def read_certificate(hostname, certificate):
-    ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
-    expire_date = datetime.strptime(certificate['notAfter'], ssl_dateformat)
+    date_format = r'%b %d %H:%M:%S %Y %Z'
+    not_after = certificate['notAfter']
+    expire_date = datetime.strptime(not_after, date_format)
     remaining = expire_date - datetime.now()
 
     # https://stackoverflow.com/a/30863209/532064
@@ -52,7 +52,7 @@ def read_certificate(hostname, certificate):
 
 
 # if __name__ == "__main__":
-#     for value in domains_url:
+#     for value in domains:
 #         try:
 #             certificate = load_certificate(value)
 #             cert_info = read_certificate(value, certificate)
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     table.add_column("Expires in (days)", justify="right")
     table.add_column("Issuer")
     
-    for value in domains_url:
+    for value in domains:
         try:
             certificate = load_certificate(value)
             cert_info = read_certificate(value, certificate)
