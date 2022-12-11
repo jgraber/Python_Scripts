@@ -1,36 +1,58 @@
-import pytest
-import os
+from fileaway import *
 
 def test_1_is_printed_as_001():
     index = 1
-    assert format_numer(index) == '001'
+    assert format_number(index) == '001'
+
 
 def test_1000_is_printed_as_1000():
     index = 1000
-    assert format_numer(index) == '1000'
+    assert format_number(index) == '1000'
 
-def format_numer(number):
-    # https://python-reference.readthedocs.io/en/latest/docs/str/rjust.html
-    return str(number).rjust(3, '0')
 
-@pytest.mark.parametrize("input, expected",
-                         [(['a/a.txt'], ['a_001.txt']),
-                          (['a/a.txt', 'a/b.txt'], ['a_001.txt','a_002.txt']),
-                          (['a/a.txt', 'b/b.txt'], ['a_001.txt','b_001.txt']),
-                          (['a/a.txt', 'b/a.txt'], ['a_001.txt','b_001.txt']),
-                          (['a/b/c.txt'], ['a_b_001.txt']),
-                         ])
-def test_file_names_are_correctly_translated(input, expected, monkeypatch: pytest.MonkeyPatch):
-    # monkeypatch.chdir(os.path.dirname(os.path.dirname(__file__)))
-    workingDir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+def test_collector_finds_files():
+    data = collector("testdata/demo")
+    assert len(data) == 8
 
-    for file in input:
-        test_file_path = os.path.join(
-            os.path.relpath(
-                workingDir + 
-                '/correct_translated/'), 
-            file)
-        print(f"{file} -> {os.path.abspath(test_file_path)}")
-    
-    # assert expected == input
-    print(f"{input}: {expected}")
+
+def test_transform_renames_single_file():
+    data = set()
+    data.add("\\a\\b\\c.txt")
+
+    result = transform(data, "test_rename")
+
+    assert result == {"\\a\\b\\c.txt": "test_rename_a_b_001.txt"}
+
+
+def test_transform_renames_multiple_files_in_same_folder():
+    data = set()
+    data.add("\\a\\b\\c.txt")
+    data.add("\\a\\b\\d.jpg")
+    data.add("\\a\\b\\f.png")
+
+    expected = {
+        "\\a\\b\\c.txt": "test_rename_a_b_001.txt",
+        "\\a\\b\\d.jpg": "test_rename_a_b_002.jpg",
+        "\\a\\b\\f.png": "test_rename_a_b_003.png"
+    }
+
+    result = transform(data, "test_rename")
+
+    assert result == expected
+
+
+def test_transform_renames_multiple_files_in_multiple_folder():
+    data = set()
+    data.add("\\a\\b\\c.txt")
+    data.add("\\a\\c\\d.jpg")
+    data.add("\\a\\d\\f.png")
+
+    expected = {
+        "\\a\\b\\c.txt": "test_rename_a_b_001.txt",
+        "\\a\\c\\d.jpg": "test_rename_a_c_001.jpg",
+        "\\a\\d\\f.png": "test_rename_a_d_001.png"
+    }
+
+    result = transform(data, "test_rename")
+
+    assert result == expected
