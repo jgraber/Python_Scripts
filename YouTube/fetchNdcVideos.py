@@ -1,4 +1,19 @@
 import scrapetube
+import datetime as dt
+
+def duration_in_minutes(duration):
+    duration_parts = duration.count(':')
+    if(duration_parts == 1):
+        temp_time = dt.datetime.strptime(duration, '%M:%S')
+        extra_minute = 1 if temp_time.second > 0 else 0
+        duration_minutes = temp_time.minute + extra_minute
+        return duration_minutes
+    else:
+        temp_time = dt.datetime.strptime(duration, '%H:%M:%S')
+        extra_minute = 1 if temp_time.second > 0 else 0
+        duration_minutes = temp_time.hour * 60 + temp_time.minute + extra_minute
+        return duration_minutes
+
 
 videos = scrapetube.get_channel("UCTdw38Cw6jcm0atBPA39a0Q")
 for video in videos:
@@ -6,7 +21,7 @@ for video in videos:
     published = video['publishedTimeText']['simpleText']
     title = video['title']['runs'][0]['text']
     lenght_text = video['lengthText']['simpleText']
-    lenght_minutes = 0
+    lenght_minutes = duration_in_minutes(lenght_text)
     url = video['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url']
     print(f"{videoId} = {published} = {title} = {lenght_text} = {lenght_minutes} = https://youtube.com{url}")
 
