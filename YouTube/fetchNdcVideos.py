@@ -14,16 +14,48 @@ def duration_in_minutes(duration):
         duration_minutes = temp_time.hour * 60 + temp_time.minute + extra_minute
         return duration_minutes
 
+def extract_title(title_all, last_conference):    
+    title = 'Unknown'
+    speaker = 'Unknown'
+    conference = 'Unknown'
+
+    counts = title_all.count(' - ')
+
+    if(counts == 1):
+        title, speaker = title_all.split(' - ')
+
+    if(counts == 2):
+        title, speaker, conference = title_all.split(' - ')
+        if('NDC' not in conference.upper()):
+            a, b, speaker = title_all.split(' - ')
+            title = f"{a} - {b}"
+            conference = 'Unknown'
+
+    if (counts == 3):
+        titlea, titleb, speaker, conference = title_all.split(' - ')
+        title = titlea + ' - ' + titleb
+
+    if(counts == 0):
+        title = title_all
+        conference = last_conference
+    else:
+        last_conference = conference
+
+    return title, speaker, conference, last_conference
+
+
+last_conference = 'Unknown'
 
 videos = scrapetube.get_channel("UCTdw38Cw6jcm0atBPA39a0Q")
 for video in videos:
     videoId = video['videoId']
     published = video['publishedTimeText']['simpleText']
-    title = video['title']['runs'][0]['text']
+    title_all = video['title']['runs'][0]['text']
+    title, speaker, conference, last_conference = extract_title(title_all, last_conference)
     lenght_text = video['lengthText']['simpleText']
     lenght_minutes = duration_in_minutes(lenght_text)
     url = video['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url']
-    print(f"{videoId} = {published} = {title} = {lenght_text} = {lenght_minutes} = https://youtube.com{url}")
+    print(f"{published} = {title} = {speaker} = {conference} = {lenght_text} = {lenght_minutes} = https://youtube.com{url}")
 
 output = """
 AYU0vw6IyUY = 4 days ago = Make a great-looking 3D landscape visualization! - Kristoffer Dyrkorn - NDC Oslo 2023 = 59:06
