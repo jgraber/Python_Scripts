@@ -1,16 +1,17 @@
 import scrapetube
 import datetime as dt
+import pandas as pd
 
 def duration_in_minutes(duration):
     duration_parts = duration.count(':')
     if(duration_parts == 1):
         temp_time = dt.datetime.strptime(duration, '%M:%S')
-        extra_minute = 1 if temp_time.second > 0 else 0
+        extra_minute = 1 if temp_time.second >= 30 else 0
         duration_minutes = temp_time.minute + extra_minute
         return duration_minutes
     else:
         temp_time = dt.datetime.strptime(duration, '%H:%M:%S')
-        extra_minute = 1 if temp_time.second > 0 else 0
+        extra_minute = 1 if temp_time.second >= 30 else 0
         duration_minutes = temp_time.hour * 60 + temp_time.minute + extra_minute
         return duration_minutes
 
@@ -43,7 +44,7 @@ def extract_title(title_all, last_conference):
 
     return title, speaker, conference, last_conference
 
-
+talks = []
 last_conference = 'Unknown'
 
 videos = scrapetube.get_channel("UCTdw38Cw6jcm0atBPA39a0Q")
@@ -55,7 +56,14 @@ for video in videos:
     lenght_text = video['lengthText']['simpleText']
     lenght_minutes = duration_in_minutes(lenght_text)
     url = video['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url']
+    talks.append([published, 'talk', conference, title, speaker, lenght_text, lenght_minutes, f"https://youtube.com{url}"])
     print(f"{published} = {title} = {speaker} = {conference} = {lenght_text} = {lenght_minutes} = https://youtube.com{url}")
+
+
+column_names=['Published','Type','Conference','Title','Speaker','Duration', 'DurationInMinutes', 'Link']
+stats_df = pd.DataFrame(talks, columns=column_names)
+stats_df.to_csv('ndc_talks_youtube.csv', index=False)
+
 
 output = """
 AYU0vw6IyUY = 4 days ago = Make a great-looking 3D landscape visualization! - Kristoffer Dyrkorn - NDC Oslo 2023 = 59:06
