@@ -34,6 +34,30 @@ def transform_folder(folder: str, source: str, target: str) -> None:
         shutil.copytree(image_folder, new_folder_path, dirs_exist_ok=True)
 
 
+def cleanup_post(input: str) -> str:
+    output = []
+    count_code_blocks = 0
+    lines = input.split('\n')
+    for line in lines:
+        if line.startswith("date:"):
+            line = line.replace("\"", "")
+        
+        if line.startswith("```"):
+            if count_code_blocks % 2 == 0:
+                line = line.replace("```", "``` py3")
+            count_code_blocks += 1
+
+        if line.startswith("This post is part of my"):
+            line = "<!-- more -->"        
+
+        if line.startswith("# Python Friday #"):
+            line = line.replace("# Python Friday #", "# #")
+
+        if "(images/" in line:
+            line = line.replace("(images/", "(")
+        output.append(line)
+    return "\n".join(output)
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     source = args[0]
