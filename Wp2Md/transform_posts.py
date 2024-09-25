@@ -26,8 +26,12 @@ def transform_folder(folder: str, source: str, target: str) -> None:
     new_folder_path = target + os.sep + year + os.sep + new_name + os.sep 
     print(f"New folder path: {new_folder_path}")
 
+    with open(f"{source}{os.sep}{folder}{os.sep}index.md", 'r', encoding='utf-8') as file:
+        post_orig = file.read()
+    post_fixed = cleanup_post(post_orig)
     os.makedirs(new_folder_path)
-    shutil.copy(f"{source}{os.sep}{folder}{os.sep}index.md", f"{new_folder_path}{new_name}.md")
+    with open(f"{new_folder_path}{new_name}.md","w+", encoding='utf-8') as f:
+        f.writelines(post_fixed)
     
     image_folder = f'{source}{os.sep}{folder}{os.sep}images'
     if os.path.isdir(image_folder):
@@ -50,13 +54,14 @@ def cleanup_post(input: str) -> str:
         if line.startswith("This post is part of my"):
             line = "<!-- more -->"        
 
-        if line.startswith("# Python Friday #"):
-            line = line.replace("# Python Friday #", "# #")
+        if line.startswith("title:"):
+            line = line.replace("Python Friday #", "#")
 
         if "(images/" in line:
             line = line.replace("(images/", "(")
         output.append(line)
     return "\n".join(output)
+
 
 if __name__ == "__main__":
     args = sys.argv[1:]

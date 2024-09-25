@@ -85,15 +85,17 @@ abc
 
 def test_fix_title():
     input = """
-# Python Friday #245: Run FastAPI
-
+---
+title: "Python Friday #1: Let’s Learn Python"
+---
 This post is part ...
 
 """
 
     expected = """
-# #245: Run FastAPI
-
+---
+title: "#1: Let’s Learn Python"
+---
 This post is part ...
 
 """
