@@ -102,3 +102,22 @@ This post is part ...
 
     output = cleanup_post(input)
     assert expected == output
+
+
+def test_fix_links_to_python_friday_posts():
+    input = """
+
+[a dashboard for FastAPI](https://improveandrepeat.com/2024/08/python-friday-238-create-a-dashboard-for-fastapi/)
+
+[see docker containers](https://improveandrepeat.com/2021/11/dev-container-for-sql-server-2019/)
+"""
+
+    expected = """
+
+[a dashboard for FastAPI](https://PythonFriday.dev/2024/08/238-create-a-dashboard-for-fastapi/)
+
+[see docker containers](https://improveandrepeat.com/2021/11/dev-container-for-sql-server-2019/)
+"""
+
+    output = cleanup_post(input)
+    assert expected == output

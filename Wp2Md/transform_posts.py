@@ -59,6 +59,11 @@ def cleanup_post(input: str) -> str:
 
         if "(images/" in line:
             line = line.replace("(images/", "(")
+
+        if "https://improveandrepeat.com/20" in line and "/python-friday-" in line:
+            line = line.replace("https://improveandrepeat.com/20", "https://PythonFriday.dev/20")
+            line = line.replace("/python-friday-", "/")
+            
         output.append(line)
     return "\n".join(output)
 
