@@ -1,7 +1,10 @@
 import os
 import sys
 import shutil
+import re
 
+link_to_blog = re.compile(r'\(https://improveandrepeat.com/(.*?)\)')
+year_and_title = re.compile(r'(?P<year>\d{4})/\d{2}/python-friday-(?P<title>\S+)/?')
 
 def collector(folder: str) -> set:
     result = set()
@@ -60,12 +63,34 @@ def cleanup_post(input: str) -> str:
         if "(images/" in line:
             line = line.replace("(images/", "(")
 
-        if "https://improveandrepeat.com/20" in line and "/python-friday-" in line:
-            line = line.replace("https://improveandrepeat.com/20", "https://PythonFriday.dev/20")
-            line = line.replace("/python-friday-", "/")
-            
+        line = make_link_relative(line)
+        line = make_link_relative(line)
+        line = make_link_relative(line)
+
         output.append(line)
-    return "\n".join(output)
+    full_post = "\n".join(output)
+    if "<!-- more -->" not in full_post:
+        full_post = full_post.replace("##", "<!-- more -->\n##", 1)
+
+    return full_post
+
+def make_link_relative(line):
+    matches = link_to_blog.search(line)
+    if matches and "/python-friday-" in matches.group(0):
+        print(f"work on {matches.group(0)}")
+        post_part = matches.group(1)
+        parts = year_and_title.search(post_part)
+        year = parts.group("year")
+        title = parts.group("title")
+        title = title.replace("?swcfpc=1", "")
+        if ")" in title:
+            title = title.replace(")", "")
+        if "/" in title:
+            title = title.replace("/", "")
+        if "#" in title:
+            title = title[:title.index("#")]
+        line = line.replace(matches.group(0), f"(./../../{year}/{title}/{title}.md)")
+    return line
 
 
 if __name__ == "__main__":

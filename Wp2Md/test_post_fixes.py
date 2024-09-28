@@ -109,14 +109,58 @@ def test_fix_links_to_python_friday_posts():
 
 [a dashboard for FastAPI](https://improveandrepeat.com/2024/08/python-friday-238-create-a-dashboard-for-fastapi/)
 
+[Northwind database](https://improveandrepeat.com/2021/05/python-friday-73-first-steps-with-sqlalchemy#Northwind)
+
+[database](https://improveandrepeat.com/2021/05/python-friday-73-first-steps?swcfpc=1)
+
 [see docker containers](https://improveandrepeat.com/2021/11/dev-container-for-sql-server-2019/)
+
+[still ](https://improveandrepeat.com/2024/04/python-friday-222-filter-the-tasks-in-the-fastapi-application/). [post](https://improveandrepeat.com/2024/08/python-friday-240-asynchronous-sqlalchemy-with-fastapi/).
 """
 
     expected = """
 
-[a dashboard for FastAPI](https://PythonFriday.dev/2024/08/238-create-a-dashboard-for-fastapi/)
+[a dashboard for FastAPI](./../../2024/238-create-a-dashboard-for-fastapi/238-create-a-dashboard-for-fastapi.md)
+
+[Northwind database](./../../2021/73-first-steps-with-sqlalchemy/73-first-steps-with-sqlalchemy.md)
+
+[database](./../../2021/73-first-steps/73-first-steps.md)
 
 [see docker containers](https://improveandrepeat.com/2021/11/dev-container-for-sql-server-2019/)
+
+[still ](./../../2024/222-filter-the-tasks-in-the-fastapi-application/222-filter-the-tasks-in-the-fastapi-application.md). [post](./../../2024/240-asynchronous-sqlalchemy-with-fastapi/240-asynchronous-sqlalchemy-with-fastapi.md).
+"""
+
+    output = cleanup_post(input)
+    assert expected == output
+
+
+def test_add_missing_more():
+    input = """
+---
+title: A B C
+---
+## A
+
+aaa
+
+## B
+
+bbb
+"""
+
+    expected = """
+---
+title: A B C
+---
+<!-- more -->
+## A
+
+aaa
+
+## B
+
+bbb
 """
 
     output = cleanup_post(input)
