@@ -48,6 +48,7 @@ def cleanup_post(input: str) -> str:
     for line in lines:
         if line.startswith("date:"):
             line = line.replace("\"", "")
+            line = f"{line} 20:00:00"
         
         if line.startswith("```"):
             if count_code_blocks % 2 == 0:
@@ -73,6 +74,7 @@ def cleanup_post(input: str) -> str:
         full_post = full_post.replace("##", "<!-- more -->\n##", 1)
 
     return full_post
+
 
 def make_link_relative(line):
     matches = link_to_blog.search(line)

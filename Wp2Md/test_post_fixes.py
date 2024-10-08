@@ -12,7 +12,7 @@ date: "2023-12-31"
 
     expected = """
 ---
-date: 2023-12-31
+date: 2023-12-31 20:00:00
 ---
 
 # Happy new years eve!
@@ -24,10 +24,6 @@ date: 2023-12-31
 
 def test_fix_code():
     input = """
----
-date: 2023-12-31
----
-
 # Happy new years eve!
 ```
 a = 1
@@ -36,10 +32,6 @@ b = 2
 """
 
     expected = """
----
-date: 2023-12-31
----
-
 # Happy new years eve!
 ``` py3
 a = 1
