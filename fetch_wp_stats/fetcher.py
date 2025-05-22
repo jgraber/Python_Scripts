@@ -54,19 +54,27 @@ def fetch_stats(folder, date_start, date_end):
 
 def fetch_stats_for_day(folder, day, driver):
     print(f"work on {day}")
-    # posts = f"https://wordpress.com/stats/day/posts/improveandrepeat.com?startDate={day}"
+    # site = "improveandrepeat.com"
+    site = "graberj.wordpress.com"
+    # posts = f"https://wordpress.com/stats/day/posts/{site}?startDate={day}"
     # driver.get(posts)
-    # countries = f"https://wordpress.com/stats/day/countryviews/improveandrepeat.com?startDate={day}"
+    # countries = f"https://wordpress.com/stats/day/countryviews/{site}?startDate={day}"
     # driver.get(countries)
-    # referer = f"https://wordpress.com/stats/day/searchterms/improveandrepeat.com?startDate={day}"
+    # searchterms = f"https://wordpress.com/stats/day/searchterms/{site}?startDate={day}"
+    # driver.get(searchterms)
+    # referer = f"https://wordpress.com/stats/day/referrers/{site}?startDate={day}"
     # driver.get(referer)
-    clicks = f"https://wordpress.com/stats/day/clicks/improveandrepeat.com?startDate={day}"
+    clicks = f"https://wordpress.com/stats/day/clicks/{site}?startDate={day}"
     driver.get(clicks)
-    time.sleep(2)
+    time.sleep(1)
     # driver.execute_script("document.getElementByClassName('jetpack-colophon').scrollIntoView();")
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    download = driver.find_element(by=By.CLASS_NAME, value="stats-download-csv")
-    download.click()
+    
+    try:
+        download = driver.find_element(by=By.CLASS_NAME, value="stats-download-csv")
+        download.click()
+    except Exception:
+        print(f"no statistics found for {day}")
 
 
 
