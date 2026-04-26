@@ -61,7 +61,7 @@ def run(playwright: Playwright, site, date_start, date_end) -> None:
 
 
 with sync_playwright() as playwright:
-    # run(playwright, "PythonFriday.dev", date(2025, 11, 7), date.today())
-    run(playwright, "jgraber.ch", date(2024, 10, 1), date.today())
-    # run(playwright, date(2025, 11, 6), date.today())
+    # run(playwright, "PythonFriday.dev", date(2026, 2, 11), date.today())
+    # run(playwright, "jgraber.ch", date(2026, 2, 11), date.today())
+    run(playwright, "ImproveAndRepeat.com", date(2026, 2, 11), date.today())
     # run(playwright, date(2024, 10, 1), date(2025, 10, 1))
